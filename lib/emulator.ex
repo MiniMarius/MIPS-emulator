@@ -32,7 +32,4 @@ defmodule Emulator do
         run(pc, code, reg, mem, out)
     end
   end
-  def run(pc, code, reg, mem, out) do
-    "hel"
-  end
 end

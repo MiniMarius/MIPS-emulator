@@ -1,10 +1,7 @@
 defmodule Program do
-  def load(e) do
-    IO.write(e)
-
+  def load(a1) do
   end
-  def read_instruction(e, d) do
-     IO.write(e,d)
+  def read_instruction(code, pc) do
   end
 
 end

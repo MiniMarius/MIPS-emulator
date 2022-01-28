@@ -4,10 +4,8 @@ defmodule Out do
     []
   end
 
-  def close(out) do
-    IO.write(out)
+  def close(a1) do
   end
-  def put(e1, e2) do
-    IO.write(e1, e2)
+  def put(a1, a2) do
   end
 end
