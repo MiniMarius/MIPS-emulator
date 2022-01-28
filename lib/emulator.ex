@@ -1,35 +1,65 @@
 defmodule Emulator do
 
-  def run(prgm) do
-    {code, data} = Program.load(prgm)
-    out = Out.new()
+  def run(code, mem, out) do
     reg = Register.new()
-    run(0, code, reg, data, out)
+    run(0, code, mem, reg, out)
   end
 
-  def run(pc, code, reg, mem) do
+  def run(pc, code, mem, reg, out) do
+
     next = Program.read_instruction(code, pc)
+
     case next do
-      :halt ->
-        :ok
-      {:add, rd, rs, rt} ->
-        pc = pc + 4
-        s = Register.read(reg, rs)
-        t = Register.read(reg, rt)
-        reg = Register.write(reg, rd, s + t) # well, almost
-        run(pc, code, reg, mem)
-    end
-  end
-  def run(pc, code, reg, mem, out) do
-    next = Program.read_instruction(code, pc)
-    case next do
-      :halt ->
+
+      {:halt} ->
         Out.close(out)
+
       {:out, rs} ->
-        pc = pc + 4
-        s = Register.read(reg, rs)
-        out = Out.put(out, s)
-        run(pc, code, reg, mem, out)
+        a = Register.read(reg, rs)
+        run(pc+1, code, mem, reg, Out.put(out,a))
+
+      {:add, rd, rs, rt} ->
+        a = Register.read(reg, rs)
+        b = Register.read(reg, rt)
+        reg = Register.write(reg, rd, a + b)  # we're not handling overflow
+        run(pc+1, code, mem, reg, out)
+
+      {:sub, rd, rs, rt} ->
+        a = Register.read(reg, rs)
+        b = Register.read(reg, rt)
+        reg = Register.write(reg, rd, a - b)
+        run(pc+1, code, mem, reg, out)
+
+      {:addi, rd, rs, imm} ->
+        a = Register.read(reg, rs)
+        reg = Register.write(reg, rd, a + imm)
+        run(pc+1, code, mem, reg, out)
+
+      {:beq, rs, rt, imm} ->
+        a = Register.read(reg, rs)
+        b = Register.read(reg, rt)
+        pc = if a == b do  pc+imm else pc end
+        run(pc+1, code, mem, reg, out)
+
+      {:bne, rs, rt, imm} ->
+        a = Register.read(reg, rs)
+        b = Register.read(reg, rt)
+        pc = if a != b do  pc+imm else pc end
+        run(pc+1, code, mem, reg, out)
+
+      {:lw, rd, rs, imm} ->
+        a = Register.read(reg, rs)
+        addr = a + imm
+        val = Memory.read(mem, addr)
+        reg = Register.write(reg, rd, val)
+        run(pc+1, code, mem, reg, out)
+
+      {:sw, rs, rt, imm} ->
+        vs = Register.read(reg, rs)
+        vt = Register.read(reg, rt)
+        addr = vt + imm
+        mem = Memory.write(mem, addr, vs)
+        run(pc+1, code, mem, reg, out)
     end
   end
 end

@@ -1,7 +1,12 @@
 defmodule Program do
-  def load(a1) do
+
+  def assemble(prgm) do
+    {:code, List.to_tuple(prgm)}
   end
-  def read_instruction(code, pc) do
+
+  def read_instruction({:code, code}, pc) do
+    elem(code, pc)
   end
+
 
 end
