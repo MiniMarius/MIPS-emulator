@@ -1,6 +1,5 @@
 defmodule Emulator.MixProject do
   use Mix.Project
-
   def project do
     [
       app: :mips,
