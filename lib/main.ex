@@ -19,7 +19,4 @@ defmodule Main do
       {:bne, 4, 0, -3},     # branch if not equal
       {:halt}]
   end
-
-
-
 end

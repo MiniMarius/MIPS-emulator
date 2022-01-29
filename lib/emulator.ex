@@ -1,14 +1,17 @@
 defmodule Emulator do
 
+  #startup function
   def run(code, mem, out) do
     reg = Register.new()
     run(0, code, mem, reg, out)
   end
 
+  #main emulator function
   def run(pc, code, mem, reg, out) do
 
     next = Program.read_instruction(code, pc)
 
+    #different cases depending on instructions given
     case next do
 
       {:halt} ->

@@ -1,5 +1,6 @@
 defmodule Memory do
 
+  #creates an empty list representing memory
   def new() do
     new([])
   end
@@ -20,6 +21,7 @@ defmodule Memory do
     end
   end
 
+  #writes value to memory at a specific index
   def write({:mem, mem}, i, v) do
     {:mem, Map.put(mem, i, v)}
   end
