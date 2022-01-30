@@ -53,7 +53,7 @@ defmodule Emulator do
       {:lw, rd, rs, imm} ->
         a = Register.read(reg, rs)
         addr = a + imm
-        val = Memory.read(mem, addr)
+        val = Program.read(mem, addr)
         reg = Register.write(reg, rd, val)
         run(pc+1, code, mem, reg, out)
 
@@ -61,7 +61,7 @@ defmodule Emulator do
         vs = Register.read(reg, rs)
         vt = Register.read(reg, rt)
         addr = vt + imm
-        mem = Memory.write(mem, addr, vs)
+        mem = Program.write(mem, addr, vs)
         run(pc+1, code, mem, reg, out)
     end
   end
