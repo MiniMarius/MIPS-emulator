@@ -7,7 +7,7 @@ defmodule Program do
 
   #Gets the tuple/instruction at index pc
   def read_instruction({:code, code}, pc) do
-    elem(code, pc)
+    elem(code, div(pc, 4))
   end
 
   #creates an empty list representing memory

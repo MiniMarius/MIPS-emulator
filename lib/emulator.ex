@@ -18,51 +18,59 @@ defmodule Emulator do
         Out.close(out)
 
       {:out, rs} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
-        run(pc+1, code, mem, reg, Out.put(out,a))
+        run(pc, code, mem, reg, Out.put(out,a))
 
       {:add, rd, rs, rt} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
         reg = Register.write(reg, rd, a + b)  # we're not handling overflow
-        run(pc+1, code, mem, reg, out)
+        run(pc, code, mem, reg, out)
 
       {:sub, rd, rs, rt} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
         reg = Register.write(reg, rd, a - b)
-        run(pc+1, code, mem, reg, out)
+        run(pc, code, mem, reg, out)
 
       {:addi, rd, rs, imm} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         reg = Register.write(reg, rd, a + imm)
-        run(pc+1, code, mem, reg, out)
+        run(pc, code, mem, reg, out)
 
       {:beq, rs, rt, imm} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
-        pc = if a == b do  pc+imm else pc end
-        run(pc+1, code, mem, reg, out)
+        pc = if a == b do  pc+(imm * 4) else pc end
+        run(pc, code, mem, reg, out)
 
       {:bne, rs, rt, imm} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
-        pc = if a != b do  pc+imm else pc end
-        run(pc+1, code, mem, reg, out)
+        pc = if a != b do  pc+(imm * 4) else pc end
+        run(pc, code, mem, reg, out)
 
       {:lw, rd, rs, imm} ->
+        pc = pc + 4
         a = Register.read(reg, rs)
         addr = a + imm
         val = Program.read(mem, addr)
         reg = Register.write(reg, rd, val)
-        run(pc+1, code, mem, reg, out)
+        run(pc, code, mem, reg, out)
 
       {:sw, rs, rt, imm} ->
+        pc = pc + 4
         vs = Register.read(reg, rs)
         vt = Register.read(reg, rt)
         addr = vt + imm
         mem = Program.write(mem, addr, vs)
-        run(pc+1, code, mem, reg, out)
+        run(pc, code, mem, reg, out)
     end
   end
 end
