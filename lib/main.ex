@@ -1,13 +1,13 @@
 defmodule Main do
 
   def main() do
-    code = Program.assemble(demo())
+    code = Program.assemble(instruction())
     mem = Memory.new([])
     out = Out.new()
     Emulator.run(code, mem, out)
   end
 
-  def demo() do
+  def instruction() do
     [{:addi, 1, 0, 10},    # $1 <- 10
       {:addi, 2, 0, 5},     # $2 <- 5
       {:add, 3, 1, 2},      # $3 <- $1 + $2
