@@ -1,7 +1,7 @@
 defmodule Main do
 
   def main() do
-    code = Program.assemble(instruction())
+    code = Program.load(instruction())
     mem = Program.new([])
     out = Out.new()
     Emulator.run(code, mem, out)

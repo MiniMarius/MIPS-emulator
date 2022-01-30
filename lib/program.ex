@@ -1,7 +1,7 @@
 defmodule Program do
 
   #Splits the assembly code list into a tuple i.e one tuple for each instruction
-  def assemble(prgm) do
+  def load(prgm) do
     {:code, List.to_tuple(prgm)}
   end
 
