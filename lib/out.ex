@@ -5,6 +5,8 @@ defmodule Out do
   #
   def put(out, a) do [a|out] end
 
-  def close(list) do IO.puts("list of integers is: [#{Enum.join(list, ", ")}]") end
+  def close(list) do
+    IO.puts("list of integers is: [#{Enum.join(list, ", ")}]")
+  end
 
 end
