@@ -1,9 +1,11 @@
 defmodule Emulator do
-
   #startup function
-  def run(code, mem, out) do
+  def run(prgm) do
+    code = Program.load(prgm)
+    out = Out.new()
+    data = Program.new()
     reg = Register.new()
-    run(0, code, mem, reg, out)
+    run(0, code, data, reg, out)
   end
 
   #main emulator function
