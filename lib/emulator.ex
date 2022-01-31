@@ -1,12 +1,30 @@
 defmodule Emulator do
   #startup function
   def run(prgm) do
-    code = Program.load(prgm)
+    {code, data} = Program.load(prgm)
     out = Out.new()
-    data = Program.new()
     reg = Register.new()
     run(0, code, data, reg, out)
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   #main emulator function
   def run(pc, code, mem, reg, out) do
@@ -58,7 +76,7 @@ defmodule Emulator do
         pc = if a != b do  pc+(imm * 4) else pc end
         run(pc, code, mem, reg, out)
 
-      {:lw, rd, rs, imm} ->
+      {:lw, rd, rs, arg, imm} ->
         pc = pc + 4
         a = Register.read(reg, rs)
         addr = a + imm
@@ -72,6 +90,10 @@ defmodule Emulator do
         vt = Register.read(reg, rt)
         addr = vt + imm
         mem = Program.write(mem, addr, vs)
+        run(pc, code, mem, reg, out)
+
+        {:label, _} ->
+        pc = pc + 4
         run(pc, code, mem, reg, out)
     end
   end

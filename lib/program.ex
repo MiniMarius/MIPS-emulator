@@ -1,13 +1,14 @@
 defmodule Program do
 
-  #Splits the assembly code list into a tuple i.e one tuple for each instruction
-  def load(prgm) do
-    {:code, List.to_tuple(prgm)}
+  #Splits the assembly code list into a tuple of 2 lists
+  #With instructions and data separated, null data if no label.
+  def load({:prgm, code, data}) do
+    {code, data}
   end
 
-  #Gets the tuple/instruction at index pc
-  def read_instruction({:code, code}, pc) do
-    elem(code, div(pc, 4))
+  #Gets the tuple/instruction at index pc from code
+  def read_instruction(list, pc) do
+    Enum.at(list, div(pc, 4))
   end
 
   #creates an empty list representing memory
