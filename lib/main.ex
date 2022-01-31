@@ -4,6 +4,7 @@ defmodule Main do
     code =
       [{:addi, 1, 0, 1},
         {:addi, 4, 0, 20},
+        {:sw, 4, 3},
         {:label, :loop},
         {:out, 4},
         {:sub, 4, 4, 1},
