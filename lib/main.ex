@@ -2,12 +2,12 @@ defmodule Main do
 
   def main() do
     code =
-      [{:addi, 1, 0, 10},    # $1 <- 10
-        {:addi, 2, 0, 5},     # $2 <- 5
-        {:add, 3, 1, 2},      # $3 <- $1 + $2
-        {:addi, 5, 0, 1},     # $5 <- 1
-        {:sub, 4, 4, 5},      # $4 <- $4 - $5
-        {:out, 4},            # out $4
+      [{:addi, 1, 0, 1},
+        {:addi, 4, 0, 20},
+        {:label, :loop},
+        {:sub, 4, 4, 1},
+        {:out, 4},
+        {:bne, 4, 0, :loop},
         {:halt}]
     data = [{:label, :arg}, {:word, 12}]
     prgm = {:prgm, code, data}
