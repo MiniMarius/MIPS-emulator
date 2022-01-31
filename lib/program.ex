@@ -20,7 +20,7 @@ defmodule Program do
   def find_instruction([]) do 0 end
   def find_instruction([h | t], address, label) do
     case h  do
-      {:label, label} -> address
+      {:label, ^label} -> address
       {_, _, _, _} -> Program.find_instruction(t, address + 4, label)
       {_, _, _} -> Program.find_instruction(t, address + 4, label)
     end
