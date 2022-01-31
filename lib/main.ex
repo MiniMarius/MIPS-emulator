@@ -5,6 +5,7 @@ defmodule Main do
   end
 
   def instruction() do
+    code =
     [{:addi, 1, 0, 10},    # $1 <- 10
       {:addi, 2, 0, 5},     # $2 <- 5
       {:add, 3, 1, 2},      # $3 <- $1 + $2
@@ -15,5 +16,7 @@ defmodule Main do
       {:out, 4},            # out $4
       {:bne, 4, 0, -3},     # branch if not equal
       {:halt}]
+    data = [{:label, :arg}, {:word, 12}]
+    prgm = {:prgm, code, data}
   end
 end
