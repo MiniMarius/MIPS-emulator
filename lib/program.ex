@@ -16,13 +16,19 @@ defmodule Program do
     new([])
   end
 
-  def find_instruction(code) do
-    Enum.count_until(code, fn x -> {:label, :loop} end)
+  #damn nice recursive function to find address of label in instructions
+  def find_instruction([]) do 0 end
+  def find_instruction([h | t], address) do
+    case h  do
+      {:label, label} -> address
+      {_, a, b, c} -> Program.find_instruction(t, address + 4)
+      {_, a, b} -> Program.find_instruction(t, address + 4)
+    end
   end
 
   def new(segments) do
-    f = fn({start, data}, layout) ->
-      last = start +  length(data) -1
+    f = fn ({start, data}, layout) ->
+      last = start + length(data) - 1
       Enum.zip(start..last, data) ++ layout
     end
     layout = List.foldr(segments, [], f)

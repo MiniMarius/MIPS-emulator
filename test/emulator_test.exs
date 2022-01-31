@@ -10,7 +10,7 @@ defmodule MipsTest do
         {:sub, 4, 4, 1},
         {:bne, 4, 0, :loop},
         {:halt}]
-    list = Program.find_instruction(code)
+    list = Program.find_instruction(code, 0)
     IO.write(list)
   end
 end
