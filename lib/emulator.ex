@@ -43,18 +43,18 @@ defmodule Emulator do
         reg = Register.write(reg, rd, a + imm)
         run(pc, code, mem, reg, out)
 
-      {:beq, rs, rt, imm} ->
+      {:beq, rs, rt, label} ->
         pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
-        pc = if a == b do  pc+(imm * 4) else pc end
+        pc = if a == b do Program.find_instruction(code, 0, label) else pc end
         run(pc, code, mem, reg, out)
 
-      {:bne, rs, rt, :loop} ->
+      {:bne, rs, rt, label} ->
         pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
-        pc = if a != b do Program.find_instruction(code, "loop") else pc end
+        pc = if a != b do Program.find_instruction(code, 0, label) else pc end
         run(pc, code, mem, reg, out)
 
       {:lw, rd, rs, arg, imm} ->

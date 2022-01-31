@@ -18,11 +18,11 @@ defmodule Program do
 
   #damn nice recursive function to find address of label in instructions
   def find_instruction([]) do 0 end
-  def find_instruction([h | t], address) do
+  def find_instruction([h | t], address, label) do
     case h  do
       {:label, label} -> address
-      {_, a, b, c} -> Program.find_instruction(t, address + 4)
-      {_, a, b} -> Program.find_instruction(t, address + 4)
+      {_, _, _, _} -> Program.find_instruction(t, address + 4, label)
+      {_, _, _} -> Program.find_instruction(t, address + 4, label)
     end
   end
 
