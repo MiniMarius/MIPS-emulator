@@ -7,25 +7,6 @@ defmodule Emulator do
     run(0, code, data, reg, out)
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   #main emulator function
   def run(pc, code, mem, reg, out) do
 
