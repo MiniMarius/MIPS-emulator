@@ -5,8 +5,8 @@ defmodule Main do
       [{:addi, 1, 0, 1},
         {:addi, 4, 0, 20},
         {:label, :loop},
-        {:sub, 4, 4, 1},
         {:out, 4},
+        {:sub, 4, 4, 1},
         {:bne, 4, 0, :loop},
         {:halt}]
     data = [{:label, :arg}, {:word, 12}]
