@@ -16,6 +16,10 @@ defmodule Program do
     new([])
   end
 
+  def find_instruction(code) do
+    Enum.count_until(code, fn x -> {:label, :loop} end)
+  end
+
   def new(segments) do
     f = fn({start, data}, layout) ->
       last = start +  length(data) -1

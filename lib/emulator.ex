@@ -54,7 +54,7 @@ defmodule Emulator do
         pc = pc + 4
         a = Register.read(reg, rs)
         b = Register.read(reg, rt)
-        pc = if a != b do 12 else pc end
+        pc = if a != b do Program.find_instruction(code, "loop") else pc end
         run(pc, code, mem, reg, out)
 
       {:lw, rd, rs, arg, imm} ->
